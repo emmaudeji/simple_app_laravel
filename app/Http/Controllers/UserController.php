@@ -15,10 +15,12 @@ class UserController extends Controller
             'lpassword' => 'required'
         ]);  
         
+        $user = null;
         if(auth()->attempt(['name' => $incomingFields['lname'], 'password' =>  $incomingFields['lpassword']])){
+            $user = $incomingFields['lname'];
             $request->session()->regenerate();
         }
-        return redirect ('/');
+        return redirect ('/', ['user' => $user]);
     }
 
     public function logout(){ 
